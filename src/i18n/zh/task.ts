@@ -20,6 +20,11 @@ export default {
     endTime: '结束时间',
     operation: '操作',
   },
+  status: {
+    pending: '未开始',
+    processing: '进行中',
+    completed: '已结束',
+  },
   platformOptions: {
     all: '全部',
     douyin: '抖音',

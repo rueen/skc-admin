@@ -147,9 +147,9 @@ const getStatusColor = (status: TaskStatus) => {
 
 const getStatusText = (status: TaskStatus) => {
   const texts: Record<TaskStatus, string> = {
-    '0': t('task.status.pending'),
-    '1': t('task.status.processing'),
-    '2': t('task.status.completed'),
+    '0': t('task.statusOptions.pending'),
+    '1': t('task.statusOptions.processing'),
+    '2': t('task.statusOptions.completed'),
   }
   return texts[status] || t('common.unknown')
 }
