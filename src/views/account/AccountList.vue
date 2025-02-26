@@ -76,35 +76,63 @@
       v-model:open="permissionModalVisible"
       :title="t('account.permissions.title')"
       @ok="handlePermissionModalOk"
+      width="800px"
     >
-      <a-form :model="permissionData">
-        <!-- 导航权限 -->
-        <a-divider>{{ t('account.permissions.navigation.title') }}</a-divider>
-        <a-form-item>
-          <a-checkbox-group v-model:value="permissionData.navigation">
-            <a-checkbox value="task">{{ t('account.permissions.navigation.task') }}</a-checkbox>
-            <a-checkbox value="enrollment">{{ t('account.permissions.navigation.enrollment') }}</a-checkbox>
-            <a-checkbox value="member">{{ t('account.permissions.navigation.member') }}</a-checkbox>
-            <a-checkbox value="finance">{{ t('account.permissions.navigation.finance') }}</a-checkbox>
-            <a-checkbox value="platform">{{ t('account.permissions.navigation.platform') }}</a-checkbox>
-            <a-checkbox value="group">{{ t('account.permissions.navigation.group') }}</a-checkbox>
-            <a-checkbox value="account">{{ t('account.permissions.navigation.account') }}</a-checkbox>
-          </a-checkbox-group>
-        </a-form-item>
-
-        <!-- 任务权限 -->
-        <a-divider>{{ t('account.permissions.task.title') }}</a-divider>
-        <a-form-item>
-          <a-checkbox-group v-model:value="permissionData.task">
-            <a-checkbox value="create">{{ t('account.permissions.task.create') }}</a-checkbox>
-            <a-checkbox value="edit">{{ t('account.permissions.task.edit') }}</a-checkbox>
-            <a-checkbox value="view">{{ t('account.permissions.task.view') }}</a-checkbox>
-            <a-checkbox value="delete">{{ t('account.permissions.task.delete') }}</a-checkbox>
-          </a-checkbox-group>
-        </a-form-item>
-
-        <!-- 其他权限组... -->
-      </a-form>
+      <div class="permission-container">
+        <!-- 左侧权限类型列表 -->
+        <div class="permission-types">
+          <a-menu
+            v-model:selectedKeys="selectedPermissionType"
+            mode="inline"
+            style="height: 100%"
+          >
+            <a-menu-item key="navigation">
+              {{ t('account.permissions.navigation.title') }}
+            </a-menu-item>
+            <a-menu-item key="task">
+              {{ t('account.permissions.task.title') }}
+            </a-menu-item>
+            <a-menu-item key="enrollment">
+              {{ t('account.permissions.enrollment.title') }}
+            </a-menu-item>
+            <a-menu-item key="member">
+              {{ t('account.permissions.member.title') }}
+            </a-menu-item>
+            <a-menu-item key="platform">
+              {{ t('account.permissions.platform.title') }}
+            </a-menu-item>
+            <a-menu-item key="group">
+              {{ t('account.permissions.group.title') }}
+            </a-menu-item>
+          </a-menu>
+        </div>
+        
+        <!-- 右侧权限选项 -->
+        <div class="permission-options">
+          <template v-if="selectedPermissionType[0] === 'navigation'">
+            <a-checkbox-group v-model:value="permissionData.navigation" class="permission-group">
+              <a-checkbox value="task">{{ t('account.permissions.navigation.task') }}</a-checkbox>
+              <a-checkbox value="enrollment">{{ t('account.permissions.navigation.enrollment') }}</a-checkbox>
+              <a-checkbox value="member">{{ t('account.permissions.navigation.member') }}</a-checkbox>
+              <a-checkbox value="finance">{{ t('account.permissions.navigation.finance') }}</a-checkbox>
+              <a-checkbox value="platform">{{ t('account.permissions.navigation.platform') }}</a-checkbox>
+              <a-checkbox value="group">{{ t('account.permissions.navigation.group') }}</a-checkbox>
+              <a-checkbox value="account">{{ t('account.permissions.navigation.account') }}</a-checkbox>
+            </a-checkbox-group>
+          </template>
+          
+          <template v-if="selectedPermissionType[0] === 'task'">
+            <a-checkbox-group v-model:value="permissionData.task" class="permission-group">
+              <a-checkbox value="create">{{ t('account.permissions.task.create') }}</a-checkbox>
+              <a-checkbox value="edit">{{ t('account.permissions.task.edit') }}</a-checkbox>
+              <a-checkbox value="view">{{ t('account.permissions.task.view') }}</a-checkbox>
+              <a-checkbox value="delete">{{ t('account.permissions.task.delete') }}</a-checkbox>
+            </a-checkbox-group>
+          </template>
+          
+          <!-- 其他权限组... -->
+        </div>
+      </div>
     </a-modal>
   </div>
 </template>
@@ -175,6 +203,9 @@ const permissionData = reactive({
   platform: [] as string[],
   group: [] as string[],
 })
+
+// 当前选中的权限类型
+const selectedPermissionType = ref(['navigation'])
 
 // 重置权限数据
 const resetPermissionData = () => {
@@ -315,6 +346,34 @@ tableData.value = mockData
 
   .danger {
     color: #ff4d4f;
+  }
+}
+
+.permission-container {
+  display: flex;
+  height: 400px;
+  border: 1px solid #f0f0f0;
+
+  .permission-types {
+    width: 200px;
+    border-right: 1px solid #f0f0f0;
+    overflow-y: auto;
+  }
+
+  .permission-options {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+
+    .permission-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+
+      :deep(.ant-checkbox-wrapper) {
+        margin-left: 0;
+      }
+    }
   }
 }
 </style> 
