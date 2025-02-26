@@ -1,3 +1,11 @@
+/*
+ * @Author: diaochan
+ * @Date: 2025-02-26 11:49:45
+ * @LastEditors: rueen
+ * @LastEditTime: 2025-02-26 11:55:35
+ * @Description: 
+ */
+import task from './task'
 export default {
   menu: {
     task: '任务管理',
@@ -21,4 +29,5 @@ export default {
     cancel: '取消',
     operation: '操作',
   },
+  task,
 } 

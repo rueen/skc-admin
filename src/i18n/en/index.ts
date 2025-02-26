@@ -1,3 +1,12 @@
+/*
+ * @Author: diaochan
+ * @Date: 2025-02-26 11:48:53
+ * @LastEditors: rueen
+ * @LastEditTime: 2025-02-26 11:55:13
+ * @Description: 
+ */
+import task from './task'
+
 export default {
   menu: {
     task: 'Tasks',
@@ -21,4 +30,5 @@ export default {
     cancel: 'Cancel',
     operation: 'Operation',
   },
+  task,
 } 

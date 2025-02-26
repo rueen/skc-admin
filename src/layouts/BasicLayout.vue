@@ -14,16 +14,16 @@
           <router-link to="/enrollment">{{ t('menu.enrollment') }}</router-link>
         </a-menu-item>
         <a-menu-item key="member">
-          <router-link to="/member">会员管理</router-link>
+          <router-link to="/member">{{ t('menu.member') }}</router-link>
         </a-menu-item>
         <a-menu-item key="finance">
-          <router-link to="/finance">金融管理</router-link>
+          <router-link to="/finance">{{ t('menu.finance') }}</router-link>
         </a-menu-item>
         <a-menu-item key="platform">
-          <router-link to="/platform">平台渠道</router-link>
+          <router-link to="/platform">{{ t('menu.platform') }}</router-link>
         </a-menu-item>
         <a-menu-item key="group">
-          <router-link to="/group">群管理</router-link>
+          <router-link to="/group">{{ t('menu.group') }}</router-link>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
