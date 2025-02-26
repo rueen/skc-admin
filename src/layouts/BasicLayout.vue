@@ -8,10 +8,10 @@
         mode="inline"
       >
         <a-menu-item key="task">
-          <router-link to="/task">任务管理</router-link>
+          <router-link to="/task">{{ t('menu.task') }}</router-link>
         </a-menu-item>
         <a-menu-item key="enrollment">
-          <router-link to="/enrollment">报名管理</router-link>
+          <router-link to="/enrollment">{{ t('menu.enrollment') }}</router-link>
         </a-menu-item>
         <a-menu-item key="member">
           <router-link to="/member">会员管理</router-link>
@@ -33,6 +33,14 @@
           {{ collapsed ? '展开' : '收起' }}
         </button>
         <div class="header-right">
+          <a-select
+            v-model:value="currentLang"
+            style="width: 100px; margin-right: 12px"
+            @change="handleLangChange"
+          >
+            <a-select-option value="zh-CN">中文</a-select-option>
+            <a-select-option value="en-US">English</a-select-option>
+          </a-select>
           <a-dropdown>
             <a class="ant-dropdown-link" @click.prevent>
               管理员
@@ -40,10 +48,10 @@
             <template #overlay>
               <a-menu>
                 <a-menu-item key="0">
-                  <a href="javascript:;">个人设置</a>
+                  <a href="javascript:;">{{ t('header.settings') }}</a>
                 </a-menu-item>
                 <a-menu-item key="1">
-                  <a href="javascript:;">退出登录</a>
+                  <a href="javascript:;">{{ t('header.logout') }}</a>
                 </a-menu-item>
               </a-menu>
             </template>
@@ -59,6 +67,15 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t, locale } = useI18n()
+const currentLang = ref(locale.value)
+
+const handleLangChange = (value: string) => {
+  locale.value = value
+  localStorage.setItem('language', value)
+}
 
 const collapsed = ref(false)
 const selectedKeys = ref(['task'])

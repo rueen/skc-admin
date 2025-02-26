@@ -1,5 +1,6 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
+import i18n from './locales'
 import {
   Button,
   Input,
@@ -24,6 +25,7 @@ const app = createApp(App)
 
 app.use(createPinia())
 app.use(router)
+app.use(i18n)
 app.use(Button)
 app.use(Input)
 app.use(Select)
