@@ -1,95 +1,98 @@
 <template>
   <div class="enrollment-detail">
-    <a-page-header
-      :title="'报名详情'"
-      @back="goBack"
-    >
-      <template #extra>
-        <a-space v-if="detail.status === '0'">
-          <a-button type="primary" @click="handleApprove">审核通过</a-button>
-          <a-button danger @click="handleReject">审核拒绝</a-button>
-        </a-space>
-      </template>
-    </a-page-header>
-
-    <a-card title="任务信息" class="detail-card">
-      <a-descriptions :column="2">
-        <a-descriptions-item label="任务ID">{{ detail.taskId }}</a-descriptions-item>
-        <a-descriptions-item label="任务名称">
-          <a @click="goToTask">{{ detail.taskName }}</a>
-        </a-descriptions-item>
-        <a-descriptions-item label="平台渠道">{{ detail.platform }}</a-descriptions-item>
-        <a-descriptions-item label="任务状态">
-          <a-tag :color="getTaskStatusColor(detail.taskStatus)">
-            {{ getTaskStatusText(detail.taskStatus) }}
-          </a-tag>
-        </a-descriptions-item>
-        <a-descriptions-item label="开始时间">{{ detail.startTime }}</a-descriptions-item>
-        <a-descriptions-item label="结束时间">{{ detail.endTime }}</a-descriptions-item>
-      </a-descriptions>
-    </a-card>
-
-    <a-card title="会员信息" class="detail-card">
-      <a-descriptions :column="2">
-        <a-descriptions-item label="会员ID">{{ detail.memberId }}</a-descriptions-item>
-        <a-descriptions-item label="会员昵称">
-          {{ detail.memberName }}
-        </a-descriptions-item>
-        <a-descriptions-item label="手机号码">{{ detail.phone }}</a-descriptions-item>
-        <a-descriptions-item label="粉丝数量">{{ detail.fansCount }}</a-descriptions-item>
-        <a-descriptions-item label="所属群">
-          {{ detail.groupName }}
-          <a-tag v-if="detail.isGroupOwner" color="purple" style="margin-left: 8px">群主</a-tag>
-        </a-descriptions-item>
-      </a-descriptions>
-    </a-card>
-
-    <a-card title="报名数据" class="detail-card">
-      <a-descriptions :column="1">
-        <a-descriptions-item label="帖子链接">
-          <a :href="detail.postLink" target="_blank">{{ detail.postLink }}</a>
-        </a-descriptions-item>
-        <a-descriptions-item label="分享链接">
-          <a :href="detail.shareLink" target="_blank">{{ detail.shareLink }}</a>
-        </a-descriptions-item>
-        <a-descriptions-item label="数据截图">
-          <a-image-preview-group>
-            <a-space>
-              <a-image
-                v-for="(img, index) in detail.screenshots"
-                :key="index"
-                :src="img"
-                :width="200"
-              />
-            </a-space>
-          </a-image-preview-group>
-        </a-descriptions-item>
-      </a-descriptions>
-    </a-card>
-
-    <a-card title="审核信息" class="detail-card">
-      <a-descriptions :column="2">
-        <a-descriptions-item label="报名时间">{{ detail.createTime }}</a-descriptions-item>
-        <a-descriptions-item label="报名状态">
-          <a-tag :color="getStatusColor(detail.status)">
-            {{ getStatusText(detail.status) }}
-          </a-tag>
-        </a-descriptions-item>
-        <template v-if="detail.status !== '0'">
-          <a-descriptions-item label="审核时间">{{ detail.auditTime }}</a-descriptions-item>
-          <a-descriptions-item label="审核人">{{ detail.auditor }}</a-descriptions-item>
-          <a-descriptions-item v-if="detail.status === '2'" label="拒绝原因">
-            {{ detail.rejectReason }}
-          </a-descriptions-item>
+    <div class="detail-container">
+      <a-page-header
+        :title="'报名详情'"
+        @back="goBack"
+      >
+        <template #extra>
+          <a-space v-if="detail.status === '0'">
+            <a-button type="primary" @click="handleApprove">审核通过</a-button>
+            <a-button danger @click="handleReject">审核拒绝</a-button>
+          </a-space>
         </template>
-      </a-descriptions>
-    </a-card>
+      </a-page-header>
+
+      <a-card title="任务信息" class="detail-card">
+        <a-descriptions :column="2">
+          <a-descriptions-item label="任务ID">{{ detail.taskId }}</a-descriptions-item>
+          <a-descriptions-item label="任务名称">
+            <a class="link" @click="goToTask">{{ detail.taskName }}</a>
+          </a-descriptions-item>
+          <a-descriptions-item label="平台渠道">{{ detail.platform }}</a-descriptions-item>
+          <a-descriptions-item label="任务状态">
+            <a-tag :color="getTaskStatusColor(detail.taskStatus)">
+              {{ getTaskStatusText(detail.taskStatus) }}
+            </a-tag>
+          </a-descriptions-item>
+          <a-descriptions-item label="开始时间">{{ detail.startTime }}</a-descriptions-item>
+          <a-descriptions-item label="结束时间">{{ detail.endTime }}</a-descriptions-item>
+        </a-descriptions>
+      </a-card>
+
+      <a-card title="会员信息" class="detail-card">
+        <a-descriptions :column="2">
+          <a-descriptions-item label="会员ID">{{ detail.memberId }}</a-descriptions-item>
+          <a-descriptions-item label="会员昵称">
+            {{ detail.memberName }}
+          </a-descriptions-item>
+          <a-descriptions-item label="手机号码">{{ detail.phone }}</a-descriptions-item>
+          <a-descriptions-item label="粉丝数量">{{ detail.fansCount }}</a-descriptions-item>
+          <a-descriptions-item label="所属群">
+            {{ detail.groupName }}
+            <a-tag v-if="detail.isGroupOwner" color="purple" style="margin-left: 8px">群主</a-tag>
+          </a-descriptions-item>
+        </a-descriptions>
+      </a-card>
+
+      <a-card title="报名数据" class="detail-card">
+        <a-descriptions :column="1">
+          <a-descriptions-item label="帖子链接">
+            <a :href="detail.postLink" target="_blank">{{ detail.postLink }}</a>
+          </a-descriptions-item>
+          <a-descriptions-item label="分享链接">
+            <a :href="detail.shareLink" target="_blank">{{ detail.shareLink }}</a>
+          </a-descriptions-item>
+          <a-descriptions-item label="数据截图">
+            <a-image-preview-group>
+              <a-space>
+                <a-image
+                  v-for="(img, index) in detail.screenshots"
+                  :key="index"
+                  :src="img"
+                  :width="200"
+                />
+              </a-space>
+            </a-image-preview-group>
+          </a-descriptions-item>
+        </a-descriptions>
+      </a-card>
+
+      <a-card title="审核信息" class="detail-card">
+        <a-descriptions :column="2">
+          <a-descriptions-item label="报名时间">{{ detail.createTime }}</a-descriptions-item>
+          <a-descriptions-item label="报名状态">
+            <a-tag :color="getStatusColor(detail.status)">
+              {{ getStatusText(detail.status) }}
+            </a-tag>
+          </a-descriptions-item>
+          <template v-if="detail.status !== '0'">
+            <a-descriptions-item label="审核时间">{{ detail.auditTime }}</a-descriptions-item>
+            <a-descriptions-item label="审核人">{{ detail.auditor }}</a-descriptions-item>
+            <a-descriptions-item v-if="detail.status === '2'" label="拒绝原因">
+              {{ detail.rejectReason }}
+            </a-descriptions-item>
+          </template>
+        </a-descriptions>
+      </a-card>
+    </div>
 
     <!-- 审核通过确认弹窗 -->
     <a-modal
       v-model:open="approveModalVisible"
       title="审核通过"
       @ok="handleApproveConfirm"
+      :width="400"
       :okText="'确定'"
       :cancelText="'取消'"
     >
@@ -101,10 +104,15 @@
       v-model:open="rejectModalVisible"
       title="审核拒绝"
       @ok="handleRejectConfirm"
+      :width="400"
       :okText="'确定'"
       :cancelText="'取消'"
     >
-      <a-form :model="rejectForm">
+      <a-form
+        :model="rejectForm"
+        :label-col="{ span: 6 }"
+        :wrapper-col="{ span: 18 }"
+      >
         <a-form-item
           label="拒绝原因"
           name="reason"
@@ -115,6 +123,7 @@
             placeholder="请输入拒绝原因"
             :rows="4"
             :maxLength="200"
+            style="width: 100%"
           />
         </a-form-item>
       </a-form>
@@ -242,8 +251,32 @@ const handleRejectConfirm = () => {
 
 <style lang="less" scoped>
 .enrollment-detail {
+  .detail-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
   .detail-card {
     margin-bottom: 24px;
+    
+    :deep(.ant-card-head) {
+      border-bottom: none;
+    }
+    
+    :deep(.ant-descriptions-item-label) {
+      color: rgba(0, 0, 0, 0.65);
+      font-weight: normal;
+    }
+  }
+
+  .link {
+    color: #1890ff;
+    cursor: pointer;
+    
+    &:hover {
+      color: #40a9ff;
+    }
   }
 }
 </style> 
