@@ -3,6 +3,8 @@ import vue from '@vitejs/plugin-vue'
 import { resolve } from 'path'
 import Components from 'unplugin-vue-components/vite'
 import { AntDesignVueResolver } from 'unplugin-vue-components/resolvers'
+import { execSync } from 'child_process'
+import { fileURLToPath } from 'url'
 
 export default defineConfig({
   plugins: [
@@ -15,10 +17,29 @@ export default defineConfig({
         }),
       ],
     }),
+    {
+      name: 'type-check',
+      handleHotUpdate({ server }) {
+        server.config.logger.info('Running type check...')
+        execSync('vue-tsc --noEmit', { stdio: 'inherit' })
+      },
+    },
   ],
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src'),
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+  build: {
+    chunkSizeWarningLimit: 1500,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'ant-design-vue': ['ant-design-vue'],
+          'vue-vendor': ['vue', 'vue-router', 'vue-i18n', 'pinia'],
+          'icons': ['@ant-design/icons-vue'],
+        },
+      },
     },
   },
   css: {
