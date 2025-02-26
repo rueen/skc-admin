@@ -52,21 +52,10 @@
         <template v-else-if="column.key === 'action'">
           <a-space>
             <a @click="handleView(record)">查看</a>
-            <a-dropdown v-if="record.status === '0'">
-              <a>
-                更多 <down-outlined />
-              </a>
-              <template #overlay>
-                <a-menu>
-                  <a-menu-item key="1" @click="handleApprove(record)">
-                    通过
-                  </a-menu-item>
-                  <a-menu-item key="2" @click="handleReject(record)">
-                    拒绝
-                  </a-menu-item>
-                </a-menu>
-              </template>
-            </a-dropdown>
+            <template v-if="record.status === '0'">
+              <a @click="handleApprove(record)">审核通过</a>
+              <a class="danger" @click="handleReject(record)">审核拒绝</a>
+            </template>
           </a-space>
         </template>
       </template>
@@ -76,7 +65,6 @@
 
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
-import { DownOutlined } from '@ant-design/icons-vue'
 import type { TablePaginationConfig } from 'ant-design-vue'
 import { useRouter } from 'vue-router'
 
@@ -204,6 +192,10 @@ tableData.value = mockData
     margin-bottom: 16px;
     display: flex;
     justify-content: space-between;
+  }
+
+  .danger {
+    color: #ff4d4f;
   }
 }
 </style> 
