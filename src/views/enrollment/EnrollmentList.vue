@@ -71,7 +71,6 @@
     >
       <p>审核通过后无法撤回，确认审核通过吗？</p>
     </a-modal>
-
     <!-- 拒绝原因弹窗 -->
     <a-modal
       v-model:open="rejectModalVisible"
