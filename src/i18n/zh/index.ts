@@ -10,6 +10,7 @@ import menu from './menu'
 import header from './header'
 import login from './login'
 import task from './task'
+import member from './member'
 
 export default {
   common,
@@ -17,4 +18,5 @@ export default {
   header,
   login,
   task,
+  member,
 } 

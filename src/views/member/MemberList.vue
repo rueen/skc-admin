@@ -23,17 +23,17 @@
     >
       <template #bodyCell="{ column, text, record }">
         <template v-if="column.key === 'isGroupOwner'">
-          <a-tag v-if="text" color="blue" @click="showGroupInfo">群主</a-tag>
+          <a-tag v-if="text" color="blue">{{ t('member.groupOwner') }}</a-tag>
         </template>
         <template v-else-if="column.key === 'action'">
           <a-space>
-            <a @click="handleEdit(record)">编辑</a>
-            <a @click="handleView(record)">查看</a>
+            <a @click="handleEdit(record)">{{ t('common.edit') }}</a>
+            <a @click="handleView(record)">{{ t('common.view') }}</a>
             <a-popconfirm
-              title="确定要删除这个会员吗？"
+              :title="t('member.deleteConfirm')"
               @confirm="handleDelete(record)"
             >
-              <a class="danger">删除</a>
+              <a class="danger">{{ t('common.delete') }}</a>
             </a-popconfirm>
           </a-space>
         </template>
@@ -71,30 +71,33 @@ import { PlusOutlined } from '@ant-design/icons-vue'
 import { message } from 'ant-design-vue'
 import type { TablePaginationConfig } from 'ant-design-vue'
 import type { FormInstance } from 'ant-design-vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const columns = [
   {
-    title: '会员昵称',
+    title: t('member.columns.nickname'),
     dataIndex: 'nickname',
     key: 'nickname',
   },
   {
-    title: '手机号',
+    title: t('member.columns.phone'),
     dataIndex: 'phone',
     key: 'phone',
   },
   {
-    title: '群主身份',
+    title: t('member.columns.isGroupOwner'),
     dataIndex: 'isGroupOwner',
     key: 'isGroupOwner',
   },
   {
-    title: '注册时间',
+    title: t('member.columns.createTime'),
     dataIndex: 'createTime',
     key: 'createTime',
   },
   {
-    title: '操作',
+    title: t('common.operation'),
     key: 'action',
   },
 ]

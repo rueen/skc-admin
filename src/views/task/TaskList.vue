@@ -48,13 +48,13 @@
         </template>
         <template v-else-if="column.key === 'action'">
           <a-space>
-            <a @click="handleEdit(record)">编辑</a>
-            <a @click="handleView(record)">查看</a>
+            <a @click="handleEdit(record)">{{ t('common.edit') }}</a>
+            <a @click="handleView(record)">{{ t('common.view') }}</a>
             <a-popconfirm
-              title="确定要删除这个任务吗？"
+              :title="t('task.deleteConfirm')"
               @confirm="handleDelete(record)"
             >
-              <a class="danger">删除</a>
+              <a class="danger">{{ t('common.delete') }}</a>
             </a-popconfirm>
           </a-space>
         </template>
@@ -68,42 +68,44 @@ import { ref, reactive } from 'vue'
 import { PlusOutlined } from '@ant-design/icons-vue'
 import type { TablePaginationConfig } from 'ant-design-vue'
 import { useRouter } from 'vue-router'
+import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
+const { t } = useI18n()
 
 const columns = [
   {
-    title: '任务名称',
+    title: t('task.columns.name'),
     dataIndex: 'name',
     key: 'name',
   },
   {
-    title: '平台渠道',
+    title: t('task.columns.platform'),
     dataIndex: 'platform',
     key: 'platform',
   },
   {
-    title: '状态',
+    title: t('task.columns.status'),
     dataIndex: 'status',
     key: 'status',
   },
   {
-    title: '报名人数',
+    title: t('task.columns.enrollCount'),
     dataIndex: 'enrollCount',
     key: 'enrollCount',
   },
   {
-    title: '开始时间',
+    title: t('task.columns.startTime'),
     dataIndex: 'startTime',
     key: 'startTime',
   },
   {
-    title: '结束时间',
+    title: t('task.columns.endTime'),
     dataIndex: 'endTime',
     key: 'endTime',
   },
   {
-    title: '操作',
+    title: t('task.columns.operation'),
     key: 'action',
   },
 ]
@@ -115,15 +117,71 @@ const searchParams = reactive({
 })
 
 const loading = ref(false)
-const tableData = ref([])
+const tableData = ref<TaskItem[]>([])
 const pagination = reactive<TablePaginationConfig>({
   total: 0,
   current: 1,
   pageSize: 10,
 })
 
-// 模拟数据
-const mockData = [
+interface TaskItem {
+  id: number
+  name: string
+  platform: string
+  status: TaskStatus
+  enrollCount: string
+  startTime: string
+  endTime: string
+}
+
+type TaskStatus = '0' | '1' | '2'
+
+const getStatusColor = (status: TaskStatus) => {
+  const colors: Record<TaskStatus, string> = {
+    '0': 'blue',
+    '1': 'green',
+    '2': 'gray',
+  }
+  return colors[status] || 'blue'
+}
+
+const getStatusText = (status: TaskStatus) => {
+  const texts: Record<TaskStatus, string> = {
+    '0': t('task.status.pending'),
+    '1': t('task.status.processing'),
+    '2': t('task.status.completed'),
+  }
+  return texts[status] || t('common.unknown')
+}
+
+const handleSearch = () => {
+  // 实现搜索逻辑
+  console.log('search:', searchParams)
+}
+
+const handleAdd = () => {
+  router.push('/task/detail/new')
+}
+
+const handleEdit = (record: TaskItem) => {
+  router.push(`/task/detail/${record.id}`)
+}
+
+const handleView = (record: TaskItem) => {
+  router.push(`/task/detail/${record.id}?mode=view`)
+}
+
+const handleDelete = (record: TaskItem) => {
+  console.log('delete:', record)
+}
+
+const handleTableChange = (pag: TablePaginationConfig) => {
+  pagination.current = pag.current || 1
+  // 实现分页逻辑
+}
+
+// 初始化加载数据
+const mockData: TaskItem[] = [
   {
     id: 1,
     name: '618美妆推广',
@@ -136,51 +194,6 @@ const mockData = [
   // 更多模拟数据...
 ]
 
-const getStatusColor = (status: string) => {
-  const colors = {
-    '0': 'blue',
-    '1': 'green',
-    '2': 'gray',
-  }
-  return colors[status] || 'blue'
-}
-
-const getStatusText = (status: string) => {
-  const texts = {
-    '0': '未开始',
-    '1': '进行中',
-    '2': '已结束',
-  }
-  return texts[status] || '未知'
-}
-
-const handleSearch = () => {
-  // 实现搜索逻辑
-  console.log('search:', searchParams)
-}
-
-const handleAdd = () => {
-  router.push('/task/detail/new')
-}
-
-const handleEdit = (record: any) => {
-  router.push(`/task/detail/${record.id}`)
-}
-
-const handleView = (record: any) => {
-  router.push(`/task/detail/${record.id}?mode=view`)
-}
-
-const handleDelete = (record: any) => {
-  console.log('delete:', record)
-}
-
-const handleTableChange = (pag: TablePaginationConfig) => {
-  pagination.current = pag.current || 1
-  // 实现分页逻辑
-}
-
-// 初始化加载数据
 tableData.value = mockData
 </script>
 
