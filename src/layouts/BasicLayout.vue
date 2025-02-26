@@ -86,9 +86,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import { useUserStore } from '@/store/modules/user'
 import {
   OrderedListOutlined,
@@ -101,9 +101,10 @@ import {
   MenuUnfoldOutlined,
 } from '@ant-design/icons-vue'
 
-const { t, locale } = useI18n()
 const router = useRouter()
+const route = useRoute()
 const userStore = useUserStore()
+const { t, locale } = useI18n()
 
 const currentLang = ref(locale.value)
 
@@ -118,7 +119,14 @@ const handleLogout = () => {
 }
 
 const collapsed = ref(false)
-const selectedKeys = ref(['task'])
+const selectedKeys = ref<string[]>([])
+
+// 根据当前路由路径设置选中的菜单项
+watchEffect(() => {
+  const path = route.path
+  const firstLevelPath = path.split('/')[1] || 'task'
+  selectedKeys.value = [firstLevelPath]
+})
 </script>
 
 <style lang="less" scoped>
