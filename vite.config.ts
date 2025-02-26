@@ -7,6 +7,7 @@ import { execSync } from 'child_process'
 import { fileURLToPath } from 'url'
 
 export default defineConfig({
+  base: process.env.NODE_ENV === 'production' ? '/skc-admin/' : '/',
   plugins: [
     vue(),
     Components({
