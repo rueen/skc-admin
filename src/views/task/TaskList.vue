@@ -64,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 import { PlusOutlined } from '@ant-design/icons-vue'
 import type { TablePaginationConfig } from 'ant-design-vue'
 import { useRouter } from 'vue-router'
@@ -73,7 +73,7 @@ import { useI18n } from 'vue-i18n'
 const router = useRouter()
 const { t } = useI18n()
 
-const columns = [
+const columns = computed(() => [
   {
     title: t('task.columns.name'),
     dataIndex: 'name',
@@ -108,7 +108,7 @@ const columns = [
     title: t('task.columns.operation'),
     key: 'action',
   },
-]
+])
 
 const searchParams = reactive({
   keyword: '',
