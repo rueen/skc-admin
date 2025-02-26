@@ -45,18 +45,40 @@
       v-model:open="modalVisible"
       :title="modalTitle"
       @ok="handleModalOk"
+      :okText="t('common.confirm')"
+      :cancelText="t('common.cancel')"
     >
       <a-form
         ref="formRef"
         :model="formData"
         :rules="rules"
         :disabled="modalMode === 'view'"
+        :label-col="{ span: 6 }"
+        :wrapper-col="{ span: 18 }"
       >
         <a-form-item label="会员昵称" name="nickname">
-          <a-input v-model:value="formData.nickname" />
+          <a-input
+            v-model:value="formData.nickname"
+            placeholder="请输入会员昵称"
+            style="width: 100%"
+          />
         </a-form-item>
         <a-form-item label="手机号" name="phone">
-          <a-input v-model:value="formData.phone" />
+          <a-input
+            v-model:value="formData.phone"
+            placeholder="请输入手机号"
+            style="width: 100%"
+          />
+        </a-form-item>
+        <a-form-item label="所属群" name="groupName">
+          <a-select
+            v-model:value="formData.groupName"
+            placeholder="请选择所属群"
+            style="width: 100%"
+          >
+            <a-select-option value="美妆交流群">美妆交流群</a-select-option>
+            <a-select-option value="美食分享群">美食分享群</a-select-option>
+          </a-select>
         </a-form-item>
         <a-form-item label="是否群主" name="isGroupOwner">
           <a-switch v-model:checked="formData.isGroupOwner" />
@@ -122,12 +144,14 @@ const formRef = ref<FormInstance>()
 const formData = reactive({
   nickname: '',
   phone: '',
+  groupName: '',
   isGroupOwner: false,
 })
 
 const rules = {
   nickname: [{ required: true, message: '请输入会员昵称' }],
   phone: [{ required: true, message: '请输入手机号' }],
+  groupName: [{ required: true, message: '请选择所属群' }],
 }
 
 // 模拟数据
