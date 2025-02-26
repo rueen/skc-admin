@@ -7,5 +7,5 @@ export default {
   success: '登录成功',
   failed: '登录失败',
   invalidCredentials: '用户名或密码错误',
-  title: 'skc种草',
+  title: 'SKC 种草',
 } 

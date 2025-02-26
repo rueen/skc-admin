@@ -1,28 +1,47 @@
 <template>
   <a-layout class="layout">
     <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
-      <div class="logo">skc种草</div>
+      <div class="logo">{{ collapsed ? t('login.title').split(' ')[0] : t('login.title') }}</div>
       <a-menu
         v-model:selectedKeys="selectedKeys"
         theme="dark"
         mode="inline"
+        class="custom-menu"
       >
         <a-menu-item key="task">
+          <template #icon>
+            <OrderedListOutlined  />
+          </template>
           <router-link to="/task">{{ t('menu.task') }}</router-link>
         </a-menu-item>
         <a-menu-item key="enrollment">
+          <template #icon>
+            <FormOutlined />
+          </template>
           <router-link to="/enrollment">{{ t('menu.enrollment') }}</router-link>
         </a-menu-item>
         <a-menu-item key="member">
+          <template #icon>
+            <TeamOutlined />
+          </template>
           <router-link to="/member">{{ t('menu.member') }}</router-link>
         </a-menu-item>
         <a-menu-item key="finance">
+          <template #icon>
+            <AccountBookOutlined />
+          </template>
           <router-link to="/finance">{{ t('menu.finance') }}</router-link>
         </a-menu-item>
         <a-menu-item key="platform">
+          <template #icon>
+            <AppstoreOutlined />
+          </template>
           <router-link to="/platform">{{ t('menu.platform') }}</router-link>
         </a-menu-item>
         <a-menu-item key="group">
+          <template #icon>
+            <UsergroupAddOutlined />
+          </template>
           <router-link to="/group">{{ t('menu.group') }}</router-link>
         </a-menu-item>
       </a-menu>
@@ -70,6 +89,14 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/store/modules/user'
+import {
+  OrderedListOutlined,
+  FormOutlined,
+  TeamOutlined,
+  AccountBookOutlined,
+  AppstoreOutlined,
+  UsergroupAddOutlined,
+} from '@ant-design/icons-vue'
 
 const { t, locale } = useI18n()
 const router = useRouter()
@@ -133,5 +160,23 @@ const selectedKeys = ref(['task'])
   padding: 24px;
   background: #fff;
   min-height: 280px;
+}
+
+.custom-menu {
+  :deep(.anticon) {
+    font-size: 18px;
+  }
+
+  :deep(.ant-menu-item) {
+    display: flex;
+    align-items: center;
+  }
+
+  :deep(.ant-menu-inline-collapsed) {
+    .ant-menu-item {
+      padding: 0 !important;
+      justify-content: center;
+    }
+  }
 }
 </style> 
