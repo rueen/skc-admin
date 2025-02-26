@@ -22,8 +22,9 @@
       @change="handleTableChange"
     >
       <template #bodyCell="{ column, text, record }">
-        <template v-if="column.key === 'isGroupOwner'">
-          <a-tag v-if="text" color="blue">{{ t('member.groupOwner') }}</a-tag>
+        <template v-if="column.key === 'groupName'">
+          {{ text }}
+          <a-tag v-if="record.isGroupOwner" color="purple" style="margin-left: 8px">群主</a-tag>
         </template>
         <template v-else-if="column.key === 'action'">
           <a-space>
@@ -77,27 +78,27 @@ const { t } = useI18n()
 
 const columns = [
   {
-    title: t('member.columns.nickname'),
+    title: '会员昵称',
     dataIndex: 'nickname',
     key: 'nickname',
   },
   {
-    title: t('member.columns.phone'),
+    title: '手机号码',
     dataIndex: 'phone',
     key: 'phone',
   },
   {
-    title: t('member.columns.isGroupOwner'),
-    dataIndex: 'isGroupOwner',
-    key: 'isGroupOwner',
+    title: '所属群',
+    dataIndex: 'groupName',
+    key: 'groupName',
   },
   {
-    title: t('member.columns.createTime'),
+    title: '创建时间',
     dataIndex: 'createTime',
     key: 'createTime',
   },
   {
-    title: t('common.operation'),
+    title: '操作',
     key: 'action',
   },
 ]
@@ -135,9 +136,19 @@ const mockData = [
     id: 1,
     nickname: '张三',
     phone: '13800138000',
+    groupName: '美妆交流群',
     isGroupOwner: true,
-    createTime: '2024-06-01',
+    createTime: '2024-02-26 10:00:00',
   },
+  {
+    id: 2,
+    nickname: '李四',
+    phone: '13800138001',
+    groupName: '美食分享群',
+    isGroupOwner: false,
+    createTime: '2024-02-26 11:00:00',
+  },
+  // 更多数据...
 ]
 
 const showGroupInfo = () => {
