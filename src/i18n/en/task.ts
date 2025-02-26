@@ -2,7 +2,7 @@
  * @Author: diaochan
  * @Date: 2025-02-26 11:50:50
  * @LastEditors: rueen
- * @LastEditTime: 2025-02-26 11:52:35
+ * @LastEditTime: 2025-02-26 14:43:26
  * @Description: 
  */
 export default {
@@ -22,4 +22,19 @@ export default {
     completed: 'Completed',
   },
   deleteConfirm: 'Are you sure to delete this task?',
+  newTask: 'New Task',
+  searchPlaceholder: 'Enter task name',
+  platformPlaceholder: 'Platform',
+  statusPlaceholder: 'Task Status',
+  platformOptions: {
+    all: 'All',
+    douyin: 'TikTok',
+    kuaishou: 'Kuaishou',
+  },
+  statusOptions: {
+    all: 'All',
+    pending: 'Pending',
+    processing: 'Processing',
+    completed: 'Completed',
+  },
 } 

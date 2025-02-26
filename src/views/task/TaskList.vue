@@ -3,11 +3,11 @@
     <div class="operation-bar">
       <a-space>
         <a-button type="primary" @click="handleAdd">
-          <plus-outlined /> 新增任务
+          <plus-outlined /> {{ t('task.newTask') }}
         </a-button>
         <a-input-search
           v-model:value="searchParams.keyword"
-          placeholder="请输入任务名称"
+          :placeholder="t('task.searchPlaceholder')"
           style="width: 200px"
           @search="handleSearch"
         />
@@ -16,21 +16,21 @@
         <a-select
           v-model:value="searchParams.platform"
           style="width: 120px"
-          placeholder="平台渠道"
+          :placeholder="t('task.platformPlaceholder')"
         >
-          <a-select-option value="">全部</a-select-option>
-          <a-select-option value="1">抖音</a-select-option>
-          <a-select-option value="2">快手</a-select-option>
+          <a-select-option value="">{{ t('task.platformOptions.all') }}</a-select-option>
+          <a-select-option value="1">{{ t('task.platformOptions.douyin') }}</a-select-option>
+          <a-select-option value="2">{{ t('task.platformOptions.kuaishou') }}</a-select-option>
         </a-select>
         <a-select
           v-model:value="searchParams.status"
           style="width: 120px"
-          placeholder="任务状态"
+          :placeholder="t('task.statusPlaceholder')"
         >
-          <a-select-option value="">全部</a-select-option>
-          <a-select-option value="0">未开始</a-select-option>
-          <a-select-option value="1">进行中</a-select-option>
-          <a-select-option value="2">已结束</a-select-option>
+          <a-select-option value="">{{ t('task.statusOptions.all') }}</a-select-option>
+          <a-select-option value="0">{{ t('task.statusOptions.pending') }}</a-select-option>
+          <a-select-option value="1">{{ t('task.statusOptions.processing') }}</a-select-option>
+          <a-select-option value="2">{{ t('task.statusOptions.completed') }}</a-select-option>
         </a-select>
       </a-space>
     </div>
