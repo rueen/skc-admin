@@ -5,30 +5,16 @@
  * @LastEditTime: 2025-02-26 11:55:13
  * @Description: 
  */
+import common from './common'
+import menu from './menu'
+import header from './header'
+import login from './login'
 import task from './task'
 
 export default {
-  menu: {
-    task: 'Tasks',
-    enrollment: 'Enrollments',
-    member: 'Members',
-    finance: 'Finance',
-    platform: 'Platforms',
-    group: 'Groups',
-  },
-  header: {
-    settings: 'Settings',
-    logout: 'Logout',
-  },
-  common: {
-    search: 'Search',
-    add: 'Add',
-    edit: 'Edit',
-    view: 'View',
-    delete: 'Delete',
-    confirm: 'Confirm',
-    cancel: 'Cancel',
-    operation: 'Operation',
-  },
+  common,
+  menu,
+  header,
+  login,
   task,
 } 
