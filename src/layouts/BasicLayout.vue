@@ -48,9 +48,10 @@
     </a-layout-sider>
     <a-layout>
       <a-layout-header class="header">
-        <button class="trigger" @click="() => (collapsed = !collapsed)">
-          {{ collapsed ? '展开' : '收起' }}
-        </button>
+        <span class="trigger" @click="() => (collapsed = !collapsed)">
+          <MenuFoldOutlined v-if="!collapsed" />
+          <MenuUnfoldOutlined v-else />
+        </span>
         <div class="header-right">
           <a-select
             v-model:value="currentLang"
@@ -96,6 +97,8 @@ import {
   AccountBookOutlined,
   AppstoreOutlined,
   UsergroupAddOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
 } from '@ant-design/icons-vue'
 
 const { t, locale } = useI18n()
@@ -143,10 +146,14 @@ const selectedKeys = ref(['task'])
     padding: 0 24px;
     font-size: 18px;
     cursor: pointer;
-    transition: color 0.3s;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    height: 100%;
 
     &:hover {
       color: @primary-color;
+      background-color: rgba(0, 0, 0, 0.025);
     }
   }
 
