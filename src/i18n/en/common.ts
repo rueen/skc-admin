@@ -9,4 +9,5 @@ export default {
   operation: 'Operation',
   unknown: 'Unknown',
   all: 'All',
+  save: 'Save',
 } 

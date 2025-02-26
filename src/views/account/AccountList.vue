@@ -16,13 +16,13 @@
       <template #bodyCell="{ column, record }">
         <template v-if="column.key === 'action'">
           <a-space>
-            <a @click="handlePermission(record)">{{ t('account.permissionButton') }}</a>
-            <a @click="handleEdit(record)">{{ t('account.editButton') }}</a>
+            <a @click="handlePermission(record)">{{ t('account.permissions.title') }}</a>
+            <a @click="handleEdit(record)">{{ t('common.edit') }}</a>
             <a-popconfirm
               :title="t('account.deleteConfirm')"
               @confirm="handleDelete(record)"
             >
-              <a class="danger">{{ t('account.deleteButton') }}</a>
+              <a class="danger">{{ t('common.delete') }}</a>
             </a-popconfirm>
           </a-space>
         </template>
@@ -34,11 +34,15 @@
       v-model:open="accountModalVisible"
       :title="accountModalTitle"
       @ok="handleAccountModalOk"
+      :okText="t('common.confirm')"
+      :cancelText="t('common.cancel')"
     >
       <a-form
         ref="formRef"
         :model="formData"
         :rules="rules"
+        :label-col="{ span: 4 }"
+        :wrapper-col="{ span: 20 }"
       >
         <a-form-item
           :label="t('account.form.username')"
@@ -47,6 +51,7 @@
           <a-input
             v-model:value="formData.username"
             :placeholder="t('account.form.usernamePlaceholder')"
+            :maxLength="20"
           />
         </a-form-item>
         <a-form-item
@@ -56,6 +61,7 @@
           <a-input-password
             v-model:value="formData.password"
             :placeholder="t('account.form.passwordPlaceholder')"
+            :maxLength="20"
           />
         </a-form-item>
         <a-form-item
@@ -66,6 +72,7 @@
             v-model:value="formData.description"
             :placeholder="t('account.form.descriptionPlaceholder')"
             :rows="4"
+            :maxLength="100"
           />
         </a-form-item>
       </a-form>
@@ -76,6 +83,8 @@
       v-model:open="permissionModalVisible"
       :title="t('account.permissions.title')"
       @ok="handlePermissionModalOk"
+      :okText="t('common.confirm')"
+      :cancelText="t('common.cancel')"
       width="800px"
     >
       <div class="permission-container">

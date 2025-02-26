@@ -16,4 +16,5 @@ export default {
   operation: '操作',
   unknown: '未知',
   all: '全部',
+  save: '保存',
 } 
