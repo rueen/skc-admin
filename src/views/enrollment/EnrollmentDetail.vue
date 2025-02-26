@@ -34,12 +34,13 @@
         <a-descriptions-item label="会员ID">{{ detail.memberId }}</a-descriptions-item>
         <a-descriptions-item label="会员昵称">
           {{ detail.memberName }}
-          <a-tooltip v-if="detail.isGroupOwner" :title="detail.groupName">
-            <a-tag color="purple" style="margin-left: 8px">群主</a-tag>
-          </a-tooltip>
         </a-descriptions-item>
         <a-descriptions-item label="手机号码">{{ detail.phone }}</a-descriptions-item>
         <a-descriptions-item label="粉丝数量">{{ detail.fansCount }}</a-descriptions-item>
+        <a-descriptions-item label="所属群">
+          {{ detail.groupName }}
+          <a-tag v-if="detail.isGroupOwner" color="purple" style="margin-left: 8px">群主</a-tag>
+        </a-descriptions-item>
       </a-descriptions>
     </a-card>
 
