@@ -74,9 +74,6 @@
             <template #overlay>
               <a-menu>
                 <a-menu-item key="0">
-                  <a href="javascript:;">{{ t('header.settings') }}</a>
-                </a-menu-item>
-                <a-menu-item key="1">
                   <a href="javascript:;" @click="handleLogout">{{ t('header.logout') }}</a>
                 </a-menu-item>
               </a-menu>

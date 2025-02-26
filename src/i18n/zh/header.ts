@@ -1,5 +1,11 @@
+/*
+ * @Author: diaochan
+ * @Date: 2025-02-26 11:57:24
+ * @LastEditors: rueen
+ * @LastEditTime: 2025-02-26 15:26:23
+ * @Description: 
+ */
 export default {
-  settings: '个人设置',
   logout: '退出登录',
   admin: '管理员',
   expand: '展开',
