@@ -53,6 +53,15 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/group/GroupList.vue'),
         meta: { title: '群管理' },
       },
+      {
+        path: '/account',
+        name: 'AccountList',
+        component: () => import('@/views/account/AccountList.vue'),
+        meta: {
+          title: '账号管理',
+          requiresAdmin: true,
+        },
+      },
     ],
   },
   {
@@ -70,22 +79,13 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
   
-  if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!userStore.checkAuth()) {
-      next({
-        path: '/login',
-        query: { redirect: to.fullPath },
-      })
-      return
-    }
+  if (to.meta.requiresAuth && !userStore.isLoggedIn) {
+    next('/login')
+  } else if (to.meta.requiresAdmin && !userStore.isAdmin) {
+    next('/403')
+  } else {
+    next()
   }
-  
-  if (to.path === '/login' && userStore.checkAuth()) {
-    next('/')
-    return
-  }
-  
-  next()
 })
 
 export default router 

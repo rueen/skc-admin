@@ -5,4 +5,5 @@ export default {
   finance: '金融管理',
   platform: '平台渠道',
   group: '群管理',
+  account: '账号管理',
 } 

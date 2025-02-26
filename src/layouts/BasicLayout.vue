@@ -8,41 +8,47 @@
         mode="inline"
         class="custom-menu"
       >
-        <a-menu-item key="task">
+        <a-menu-item v-if="userStore.hasPermission('nav:task')" key="task">
           <template #icon>
             <OrderedListOutlined  />
           </template>
           <router-link to="/task">{{ t('menu.task') }}</router-link>
         </a-menu-item>
-        <a-menu-item key="enrollment">
+        <a-menu-item v-if="userStore.hasPermission('nav:enrollment')" key="enrollment">
           <template #icon>
             <FormOutlined />
           </template>
           <router-link to="/enrollment">{{ t('menu.enrollment') }}</router-link>
         </a-menu-item>
-        <a-menu-item key="member">
+        <a-menu-item v-if="userStore.hasPermission('nav:member')" key="member">
           <template #icon>
             <TeamOutlined />
           </template>
           <router-link to="/member">{{ t('menu.member') }}</router-link>
         </a-menu-item>
-        <a-menu-item key="finance">
+        <a-menu-item v-if="userStore.hasPermission('nav:finance')" key="finance">
           <template #icon>
             <AccountBookOutlined />
           </template>
           <router-link to="/finance">{{ t('menu.finance') }}</router-link>
         </a-menu-item>
-        <a-menu-item key="platform">
+        <a-menu-item v-if="userStore.hasPermission('nav:platform')" key="platform">
           <template #icon>
             <AppstoreOutlined />
           </template>
           <router-link to="/platform">{{ t('menu.platform') }}</router-link>
         </a-menu-item>
-        <a-menu-item key="group">
+        <a-menu-item v-if="userStore.hasPermission('nav:group')" key="group">
           <template #icon>
             <UsergroupAddOutlined />
           </template>
           <router-link to="/group">{{ t('menu.group') }}</router-link>
+        </a-menu-item>
+        <a-menu-item v-if="userStore.isAdmin" key="account">
+          <template #icon>
+            <UserOutlined />
+          </template>
+          <router-link to="/account">{{ t('menu.account') }}</router-link>
         </a-menu-item>
       </a-menu>
     </a-layout-sider>
@@ -99,6 +105,7 @@ import {
   UsergroupAddOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  UserOutlined,
 } from '@ant-design/icons-vue'
 
 const router = useRouter()
@@ -127,6 +134,9 @@ watchEffect(() => {
   const firstLevelPath = path.split('/')[1] || 'task'
   selectedKeys.value = [firstLevelPath]
 })
+
+// 初始化用户状态
+userStore.initState()
 </script>
 
 <style lang="less" scoped>

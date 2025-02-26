@@ -11,6 +11,7 @@ import header from './header'
 import login from './login'
 import task from './task'
 import member from './member'
+import account from './account'
 
 export default {
   common,
@@ -19,4 +20,5 @@ export default {
   login,
   task,
   member,
+  account,
 } 

@@ -6,41 +6,119 @@ interface LoginParams {
   password: string
 }
 
-export const useUserStore = defineStore('user', () => {
-  const token = ref<string>(localStorage.getItem('token') || '')
-  const userInfo = ref<any>(null)
-
-  const login = async (params: LoginParams) => {
-    // 这里应该调用实际的登录 API
-    // 暂时模拟登录过程
-    if (params.username === 'admin' && params.password === '123456') {
-      const mockToken = 'mock-token-' + Date.now()
-      token.value = mockToken
-      localStorage.setItem('token', mockToken)
-      userInfo.value = {
-        username: params.username,
-        role: 'admin',
+export const useUserStore = defineStore('user', {
+  state: () => ({
+    token: '',
+    userInfo: null as any,
+    permissions: [] as string[],
+  }),
+  
+  getters: {
+    isLoggedIn: (state) => !!state.token,
+    isAdmin: (state) => state.userInfo?.role === 'admin',
+    hasPermission: (state) => (permission: string) => state.permissions.includes(permission),
+  },
+  
+  actions: {
+    async login(params: LoginParams) {
+      // 这里应该调用实际的登录 API
+      // 暂时模拟登录过程
+      if (params.username === 'admin' && params.password === '123456') {
+        const mockToken = 'mock-token-' + Date.now()
+        this.token = mockToken
+        localStorage.setItem('token', mockToken)
+        this.userInfo = {
+          username: params.username,
+          role: 'admin',
+          isAdmin: true,
+        }
+        this.permissions = [
+          'nav:task',
+          'nav:enrollment',
+          'nav:member',
+          'nav:finance',
+          'nav:platform',
+          'nav:group',
+          'nav:account',
+          'task:create',
+          'task:edit',
+          'task:view',
+          'task:delete',
+          'enrollment:review',
+          'enrollment:batchOperation',
+          'member:create',
+          'member:edit',
+          'member:view',
+          'member:delete',
+          'platform:create',
+          'group:create',
+          'group:edit',
+          'group:view',
+          'group:delete',
+        ]
+        localStorage.setItem('permissions', JSON.stringify(this.permissions))
+        return true
       }
-      return true
-    }
-    throw new Error('用户名或密码错误')
-  }
+      throw new Error('用户名或密码错误')
+    },
 
-  const logout = () => {
-    token.value = ''
-    userInfo.value = null
-    localStorage.removeItem('token')
-  }
+    logout() {
+      this.token = ''
+      this.userInfo = null
+      this.permissions = []
+      localStorage.removeItem('token')
+      localStorage.removeItem('permissions')
+    },
 
-  const checkAuth = () => {
-    return !!token.value
-  }
+    checkAuth() {
+      return !!this.token
+    },
 
-  return {
-    token,
-    userInfo,
-    login,
-    logout,
-    checkAuth,
+    initState() {
+      const token = localStorage.getItem('token')
+      if (token) {
+        this.token = token
+        this.userInfo = {
+          username: 'admin',
+          role: 'admin',
+          isAdmin: true,
+        }
+        const permissions = localStorage.getItem('permissions')
+        // 如果没有权限记录，设置默认权限
+        this.permissions = permissions ? JSON.parse(permissions) : [
+          'nav:task',
+          'nav:enrollment',
+          'nav:member',
+          'nav:finance',
+          'nav:platform',
+          'nav:group',
+          'nav:account',
+          'task:create',
+          'task:edit',
+          'task:view',
+          'task:delete',
+          'enrollment:review',
+          'enrollment:batchOperation',
+          'member:create',
+          'member:edit',
+          'member:view',
+          'member:delete',
+          'platform:create',
+          'group:create',
+          'group:edit',
+          'group:view',
+          'group:delete',
+        ]
+        // 保存权限到本地存储
+        if (!permissions) {
+          localStorage.setItem('permissions', JSON.stringify(this.permissions))
+        }
+      }
+    },
+
+    setPermissions(permissions: string[]) {
+      this.permissions = permissions
+      localStorage.setItem('permissions', JSON.stringify(permissions))
+    },
   }
 }) 
