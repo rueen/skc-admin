@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { useUserStore } from '@/store/modules/user'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
     component: () => import('@/layouts/BasicLayout.vue'),
+    meta: { requiresAuth: true },
     children: [
       {
         path: '',
@@ -53,11 +55,37 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/login/index.vue'),
+  },
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes,
+})
+
+router.beforeEach((to, from, next) => {
+  const userStore = useUserStore()
+  
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!userStore.checkAuth()) {
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath },
+      })
+      return
+    }
+  }
+  
+  if (to.path === '/login' && userStore.checkAuth()) {
+    next('/')
+    return
+  }
+  
+  next()
 })
 
 export default router 

@@ -1,7 +1,7 @@
 <template>
   <a-layout class="layout">
     <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
-      <div class="logo">MCN平台</div>
+      <div class="logo">skc种草</div>
       <a-menu
         v-model:selectedKeys="selectedKeys"
         theme="dark"
@@ -51,7 +51,7 @@
                   <a href="javascript:;">{{ t('header.settings') }}</a>
                 </a-menu-item>
                 <a-menu-item key="1">
-                  <a href="javascript:;">{{ t('header.logout') }}</a>
+                  <a href="javascript:;" @click="handleLogout">{{ t('header.logout') }}</a>
                 </a-menu-item>
               </a-menu>
             </template>
@@ -68,13 +68,23 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/store/modules/user'
 
 const { t, locale } = useI18n()
+const router = useRouter()
+const userStore = useUserStore()
+
 const currentLang = ref(locale.value)
 
 const handleLangChange = (value: string) => {
   locale.value = value
   localStorage.setItem('language', value)
+}
+
+const handleLogout = () => {
+  userStore.logout()
+  router.push('/login')
 }
 
 const collapsed = ref(false)
