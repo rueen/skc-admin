@@ -45,28 +45,30 @@
       :row-selection="rowSelection"
       @change="handleTableChange"
     >
-      <template #status="{ text }">
-        <a-tag :color="getStatusColor(text)">{{ getStatusText(text) }}</a-tag>
-      </template>
-      <template #action="{ record }">
-        <a-space>
-          <a @click="handleView(record)">查看</a>
-          <a-dropdown v-if="record.status === '0'">
-            <a>
-              更多 <down-outlined />
-            </a>
-            <template #overlay>
-              <a-menu>
-                <a-menu-item key="1" @click="handleApprove(record)">
-                  通过
-                </a-menu-item>
-                <a-menu-item key="2" @click="handleReject(record)">
-                  拒绝
-                </a-menu-item>
-              </a-menu>
-            </template>
-          </a-dropdown>
-        </a-space>
+      <template #bodyCell="{ column, text, record }">
+        <template v-if="column.key === 'status'">
+          <a-tag :color="getStatusColor(text)">{{ getStatusText(text) }}</a-tag>
+        </template>
+        <template v-else-if="column.key === 'action'">
+          <a-space>
+            <a @click="handleView(record)">查看</a>
+            <a-dropdown v-if="record.status === '0'">
+              <a>
+                更多 <down-outlined />
+              </a>
+              <template #overlay>
+                <a-menu>
+                  <a-menu-item key="1" @click="handleApprove(record)">
+                    通过
+                  </a-menu-item>
+                  <a-menu-item key="2" @click="handleReject(record)">
+                    拒绝
+                  </a-menu-item>
+                </a-menu>
+              </template>
+            </a-dropdown>
+          </a-space>
+        </template>
       </template>
     </a-table>
   </div>
@@ -105,12 +107,10 @@ const columns = [
     title: '状态',
     dataIndex: 'status',
     key: 'status',
-    slots: { customRender: 'status' },
   },
   {
     title: '操作',
     key: 'action',
-    slots: { customRender: 'action' },
   },
 ]
 
