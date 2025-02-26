@@ -139,6 +139,40 @@ userStore.initState()
 <style lang="less" scoped>
 .layout {
   min-height: 100vh;
+  display: flex;
+
+  :deep(.ant-layout-sider) {
+    height: 100vh;
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.1);
+    }
+  }
+
+  > .ant-layout {
+    margin-left: 200px;
+    min-height: 100vh;
+    transition: margin-left 0.2s;
+
+    &.ant-layout-has-sider {
+      margin-left: 80px;
+    }
+  }
 }
 
 .logo {
@@ -156,6 +190,10 @@ userStore.initState()
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 
   .trigger {
     padding: 0 24px;
@@ -181,7 +219,22 @@ userStore.initState()
   margin: 24px 16px;
   padding: 24px;
   background: #fff;
-  min-height: 280px;
+  height: calc(100vh - 112px);
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 3px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1);
+  }
 }
 
 .custom-menu {
