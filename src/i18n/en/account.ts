@@ -37,19 +37,22 @@ export default {
     },
     enrollment: {
       title: 'Enrollment Permissions',
+      view: 'View Details',
       review: 'Review Enrollment',
-      batchOperation: 'Batch Operation',
     },
     member: {
       title: 'Member Permissions',
       create: 'Create Member',
-      edit: 'Edit Member',
       view: 'View Member',
+      edit: 'Edit Member',
       delete: 'Delete Member',
     },
     platform: {
       title: 'Platform Permissions',
       create: 'Create Platform',
+      view: 'View Platform',
+      edit: 'Edit Platform',
+      delete: 'Delete Platform',
     },
     group: {
       title: 'Group Permissions',

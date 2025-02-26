@@ -130,7 +130,39 @@
             </a-checkbox-group>
           </template>
           
-          <!-- 其他权限组... -->
+          <template v-if="selectedPermissionType[0] === 'enrollment'">
+            <a-checkbox-group v-model:value="permissionData.enrollment" class="permission-group">
+              <a-checkbox value="view">{{ t('account.permissions.enrollment.view') }}</a-checkbox>
+              <a-checkbox value="review">{{ t('account.permissions.enrollment.review') }}</a-checkbox>
+            </a-checkbox-group>
+          </template>
+          
+          <template v-if="selectedPermissionType[0] === 'member'">
+            <a-checkbox-group v-model:value="permissionData.member" class="permission-group">
+              <a-checkbox value="create">{{ t('account.permissions.member.create') }}</a-checkbox>
+              <a-checkbox value="view">{{ t('account.permissions.member.view') }}</a-checkbox>
+              <a-checkbox value="edit">{{ t('account.permissions.member.edit') }}</a-checkbox>
+              <a-checkbox value="delete">{{ t('account.permissions.member.delete') }}</a-checkbox>
+            </a-checkbox-group>
+          </template>
+          
+          <template v-if="selectedPermissionType[0] === 'platform'">
+            <a-checkbox-group v-model:value="permissionData.platform" class="permission-group">
+              <a-checkbox value="create">{{ t('account.permissions.platform.create') }}</a-checkbox>
+              <a-checkbox value="view">{{ t('account.permissions.platform.view') }}</a-checkbox>
+              <a-checkbox value="edit">{{ t('account.permissions.platform.edit') }}</a-checkbox>
+              <a-checkbox value="delete">{{ t('account.permissions.platform.delete') }}</a-checkbox>
+            </a-checkbox-group>
+          </template>
+          
+          <template v-if="selectedPermissionType[0] === 'group'">
+            <a-checkbox-group v-model:value="permissionData.group" class="permission-group">
+              <a-checkbox value="create">{{ t('account.permissions.group.create') }}</a-checkbox>
+              <a-checkbox value="view">{{ t('account.permissions.group.view') }}</a-checkbox>
+              <a-checkbox value="edit">{{ t('account.permissions.group.edit') }}</a-checkbox>
+              <a-checkbox value="delete">{{ t('account.permissions.group.delete') }}</a-checkbox>
+            </a-checkbox-group>
+          </template>
         </div>
       </div>
     </a-modal>

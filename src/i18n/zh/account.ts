@@ -37,8 +37,8 @@ export default {
     },
     enrollment: {
       title: '报名权限',
+      view: '查看详情',
       review: '审核报名',
-      batchOperation: '批量操作',
     },
     member: {
       title: '会员权限',
@@ -50,6 +50,9 @@ export default {
     platform: {
       title: '渠道权限',
       create: '新增渠道',
+      view: '查看渠道',
+      edit: '编辑渠道',
+      delete: '删除渠道',
     },
     group: {
       title: '群组权限',
