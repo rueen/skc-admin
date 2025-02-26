@@ -17,12 +17,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: Build
+    - name: 安装依赖并打包
       run: |
         npm install
         npm run build
+
+    - name: 部署
+      uses: actions/upload-artifact@v4
+      with:
+        name: dist
+        path: dist
